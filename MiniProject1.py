@@ -2,11 +2,12 @@ import CreateVideo as createVideo
 import AnalyzeVideo as analyzeVideo
 import GetPictures as getPictures
 
-TWITTER = "test"
+USERNAME = "NASA"
+NUM_IMAGES = 10
 FRAME_DURATION = ".25"
 
-getPictures.getPictures(TWITTER)
+getPictures.getPictures(USERNAME, NUM_IMAGES)
     
-createVideo.createVideo(TWITTER, FRAME_DURATION)
+createVideo.createVideo(USERNAME, FRAME_DURATION)
 
-analyzeVideo.analyzeVideo(TWITTER)
+analyzeVideo.analyzeVideo(USERNAME)
