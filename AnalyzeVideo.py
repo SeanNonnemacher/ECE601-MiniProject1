@@ -4,7 +4,7 @@ import io
 from google.cloud import videointelligence
 
 #location of Google Credentials.json file
-GOOGLE_KEY_JSON_FILE = "C:/Users/Sean/Downloads/key.json"
+GOOGLE_KEY_JSON_FILE = "C:/Users/Sean/Desktop/601 Keys/key.json"
 
 #Analyzes video from given location
 def analyzeVideo(username):
@@ -13,9 +13,8 @@ def analyzeVideo(username):
     
     with io.open("Videos/" + username + ".mp4", 'rb') as movie:
         input_content = movie.read()
-    analyzeLabels(input_content)
-
-
+    labels = analyzeLabels(input_content)
+    return labels
 
 
 #Analyzes video and outputs labels to console
@@ -28,6 +27,8 @@ def analyzeLabels(input_content):
 
     result = operation.result(timeout=90)
     print('\nFinished processing.')
+    
+    labels = []
 
     shotLabels = result.annotation_results[0].shot_label_annotations
     for i, shot_label in enumerate(shotLabels):
@@ -36,6 +37,7 @@ def analyzeLabels(input_content):
         for category_entity in shot_label.category_entities:
             print('\tLabel category description: {}'.format(
                 category_entity.description))
+            labels.append(category_entity.description)
     
         for i, shot in enumerate(shot_label.segments):
             startTime = (shot.segment.start_time_offset.seconds +
@@ -47,5 +49,6 @@ def analyzeLabels(input_content):
             print('\tSegment {}: {}'.format(i, positions))
             print('\tConfidence: {}'.format(confidence))
         print('\n')
+    return labels
 
 
